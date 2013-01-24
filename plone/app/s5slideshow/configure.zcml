@@ -9,4 +9,31 @@
     directory="resources"
     />
 
+  <include package="archetypes.schemaextender" />
+
+  <adapter
+    name="plone.app.s5slideshow.presentation_mode"
+    for=".interfaces.IPresentationMode"
+    factory=".extender.PresentationSchemaExtender" />
+
+  <class class="Products.ATContentTypes.content.document.ATDocument">
+    <implements interface=".interfaces.IPresentationMode" />
+  </class>
+
+  <browser:page
+      name="presentation_view"
+      for=".interfaces.IPresentationMode"
+      class=".presentation.PresentationView"
+      template="presentation.pt"
+      permission="zope2.View"
+     />
+
+  <browser:viewlet
+      name="plone.presentation"
+      for=".interfaces.IPresentationMode"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
+      class=".presentation.PresentationViewlet"
+      permission="zope2.View"
+      />
+
 </configure>

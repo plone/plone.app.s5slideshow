@@ -24,6 +24,8 @@ setup(name='plone.app.s5slideshow',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'Products.ATContentTypes',
+          'Products.CMFPlone',
           # -*- Extra requirements: -*-
       ],
       extras_require = {'test': ['plone.app.testing',]},
