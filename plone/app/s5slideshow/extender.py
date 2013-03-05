@@ -2,7 +2,9 @@ from zope.interface import implements
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.Archetypes import atapi
 from archetypes.schemaextender.interfaces import ISchemaExtender
+from archetypes.schemaextender.interfaces import IBrowserLayerAwareExtender
 from archetypes.schemaextender.field import ExtensionField
+from plone.app.s5slideshow.interfaces import IS5SlideshowLayer
 
 
 class ExtensionBooleanField(ExtensionField, atapi.BooleanField):
@@ -10,7 +12,8 @@ class ExtensionBooleanField(ExtensionField, atapi.BooleanField):
 
 
 class PresentationSchemaExtender(object):
-    implements(ISchemaExtender)
+    implements(ISchemaExtender, IBrowserLayerAwareExtender)
+    layer = IS5SlideshowLayer
 
     fields = [
         ExtensionBooleanField(

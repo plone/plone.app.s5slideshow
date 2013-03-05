@@ -7,6 +7,7 @@
   <browser:resourceDirectory
     name="plone.app.s5slideshow"
     directory="resources"
+    layer=".interfaces.IS5SlideshowLayer"
     />
 
   <include package="archetypes.schemaextender" />
@@ -14,6 +15,7 @@
   <adapter
     name="plone.app.s5slideshow.presentation_mode"
     for=".interfaces.IPresentationMode"
+    provides="archetypes.schemaextender.interfaces.ISchemaExtender"
     factory=".extender.PresentationSchemaExtender" />
 
   <class class="Products.ATContentTypes.content.document.ATDocument">
@@ -26,6 +28,7 @@
       class=".presentation.PresentationView"
       template="presentation.pt"
       permission="zope2.View"
+      layer=".interfaces.IS5SlideshowLayer"
      />
 
   <browser:viewlet
@@ -34,6 +37,15 @@
       manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
       class=".presentation.PresentationViewlet"
       permission="zope2.View"
+      layer=".interfaces.IS5SlideshowLayer"
+      />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="S5 Slideshow support"
+      directory="profiles/default"
+      description="Allows the user to view a slideshow based on a document."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
 </configure>
