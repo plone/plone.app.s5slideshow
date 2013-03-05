@@ -1,7 +1,6 @@
 import re
 from zope.i18n import translate
 
-from Acquisition import aq_base
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import PloneMessageFactory as _
@@ -35,8 +34,8 @@ class PresentationView(BrowserView):
         return bool(HEADING_RE.search(body))
 
     def content(self):
-        # ugly, ugly, ugly code, that basically changes the way the slide is put
-        # together this should be a HTML parser or XSLT or even JS
+        # ugly, ugly, ugly code, that basically changes the way the slide is
+        # put together this should be a HTML parser or XSLT or even JS
 
         body = self.body()
         m = HEADING_RE.search(body)
@@ -49,7 +48,8 @@ class PresentationView(BrowserView):
             body = body.replace("</%s>" % tag, "</%s>" % new)
             tag = new
 
-        body = re.sub(r'(<%s[^>]*>)' % tag, r'</div><div class="slide">\n\1', body)
+        body = re.sub(
+            r'(<%s[^>]*>)' % tag, r'</div><div class="slide">\n\1', body)
         if body.startswith('</div>'):
             body = body[6:]
         body += '</div>'
@@ -71,12 +71,14 @@ class PresentationView(BrowserView):
 class PresentationViewlet(ViewletBase):
 
     def update(self):
-        self.presentation_enabled = self.context.getField('presentation').get(self.context)
+        self.presentation_enabled = self.context.getField('presentation').get(
+            self.context)
 
     def render(self):
         if self.presentation_enabled:
             url = "%s/presentation_view" % self.context.absolute_url()
             msg = _(u'Also available in presentation mode\u2026')
             msg = translate(msg, domain='plone', context=self.request)
-            return u'<p id="link-presentation"><a href="%s" rel="nofollow" class="link-presentation">%s</a></p>' % (url, msg)
+            return (u'<p id="link-presentation"><a href="%s" rel="nofollow" '
+                    u'class="link-presentation">%s</a></p>' % (url, msg))
         return u''

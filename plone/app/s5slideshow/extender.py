@@ -3,7 +3,6 @@ from Products.CMFPlone import PloneMessageFactory as _
 from Products.Archetypes import atapi
 from archetypes.schemaextender.interfaces import ISchemaExtender
 from archetypes.schemaextender.field import ExtensionField
-from plone.app.s5slideshow.interfaces import IPresentationMode
 
 
 class ExtensionBooleanField(ExtensionField, atapi.BooleanField):
@@ -14,7 +13,8 @@ class PresentationSchemaExtender(object):
     implements(ISchemaExtender)
 
     fields = [
-        ExtensionBooleanField('presentation',
+        ExtensionBooleanField(
+            'presentation',
             schemata='settings',
             required=False,
             languageIndependent=True,
@@ -26,8 +26,8 @@ class PresentationSchemaExtender(object):
                     u'help_enable_presentation_description',
                     default=u'If selected, this will give users the ability '
                             u'to view the contents as presentation slides.')
-                ),
             ),
+        ),
     ]
 
     def __init__(self, context):
